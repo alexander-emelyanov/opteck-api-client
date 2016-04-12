@@ -3,10 +3,10 @@
 namespace Opteck;
 
 use GuzzleHttp;
+use Opteck\Requests\CreateLead as CreateLeadRequest;
 use Opteck\Responses\CreateLead as CreateLeadResponse;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
-use Opteck\Requests\CreateLead as CreateLeadRequest;
 
 class ApiClient implements LoggerAwareInterface
 {
@@ -20,7 +20,7 @@ class ApiClient implements LoggerAwareInterface
      */
     protected $logger;
 
-    protected $url = "https://api.optaffiliates.com/v1";
+    protected $url = 'https://api.optaffiliates.com/v1';
 
     /**
      * @var int
@@ -70,7 +70,7 @@ class ApiClient implements LoggerAwareInterface
 
         $data['checksum'] = $this->getChecksum($data);
 
-        $payload = new Payload($this->postRequest($this->getUrl() . "/lead/create", $data));
+        $payload = new Payload($this->postRequest($this->getUrl().'/lead/create', $data));
         $response = new CreateLeadResponse($payload);
 
         return $response;
@@ -113,7 +113,7 @@ class ApiClient implements LoggerAwareInterface
      */
     protected function getChecksum($data)
     {
-        $stringForHash = $this->partnerId . http_build_query($data);
+        $stringForHash = $this->partnerId.http_build_query($data);
 
         return strtoupper(hash('md5', $stringForHash));
     }

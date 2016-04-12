@@ -7,12 +7,11 @@ use Opteck\Requests\CreateLead as CreateLeadRequest;
 
 class CreateLeadTest extends TestCase
 {
-
     public function testEmailAlreadyExists()
     {
         /** @var \Opteck\Requests\CreateLead $request */
         $request = new CreateLeadRequest([
-            'email' => 'test@gmail.com',
+            'email'       => 'test@gmail.com',
             'firstName'   => 'John',
             'lastName'    => 'Smith',
             'language'    => 'EN',
@@ -22,7 +21,7 @@ class CreateLeadTest extends TestCase
             'subCampaign' => 'sub_campaign_1',
         ]);
 
-        /** @var \Opteck\Responses\CreateLead $response */
+        /* @var \Opteck\Responses\CreateLead $response */
         try {
             $this->apiClient->createLead($request);
             $this->assertTrue(false, 'Lead with email "test@gmail.com" must not be created...');
