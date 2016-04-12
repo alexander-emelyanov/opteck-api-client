@@ -6,5 +6,4 @@ use Opteck\Exception;
 
 class EmailAlreadyExistsException extends Exception
 {
-
 }
