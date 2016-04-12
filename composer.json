@@ -1,0 +1,32 @@
+{
+  "name": "alexander-emelyanov/opteck-api-client",
+  "description": "PHP Client for Opteck platform",
+  "keywords": ["Opteck", "api", "Binary Options"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alexander Emelyanov",
+      "email": "alexander.emelyanov@outlook.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5",
+    "guzzlehttp/guzzle": "~6.0",
+    "psr/log": "^1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.1",
+    "fzaninotto/faker": "~1.4",
+    "monolog/monolog": "^1.18"
+  },
+  "autoload": {
+    "psr-4": {
+      "Opteck\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Opteck\\Tests\\": "tests"
+    }
+  }
+}
