@@ -1,7 +1,7 @@
 # Opteck platform API client
 
 [![Build Status](https://img.shields.io/travis/alexander-emelyanov/opteck-api-client/master.svg?style=flat-square)](https://travis-ci.org/alexander-emelyanov/opteck-api-client)
-[![StyleCI](https://styleci.io/repos/56054469/shield)](https://styleci.io/repos/56054469)
+[![StyleCI](https://styleci.io/repos/56054469/shield?)](https://styleci.io/repos/56054469)
 [![Code Climate](https://img.shields.io/codeclimate/github/alexander-emelyanov/opteck-api-client.svg?style=flat-square)](https://codeclimate.com/github/alexander-emelyanov/opteck-api-client)
 
 This repository contains PHP Client for Opteck platform.
