@@ -6,6 +6,7 @@ use GuzzleHttp;
 use Opteck\Requests\CreateLead as CreateLeadRequest;
 use Opteck\Responses\Auth as AuthResponse;
 use Opteck\Responses\CreateLead as CreateLeadResponse;
+use Opteck\Responses\GetLeadDetails as GetLeadDetailsResponse;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 
@@ -99,6 +100,28 @@ class ApiClient implements LoggerAwareInterface
 
         $payload = new Payload($this->postRequest($this->getUrl().'/trade/auth', $data));
         $response = new AuthResponse($payload);
+
+        return $response;
+    }
+
+    /**
+     * Returns lead information.
+     *
+     * @param string $email
+     *
+     * @return \Opteck\Responses\GetLeadDetails
+     */
+    public function getLeadDetails($email)
+    {
+        $data = [
+            'affiliateID' => $this->affiliateId,
+            'email'       => $email,
+        ];
+
+        $data['checksum'] = $this->getChecksum($data);
+
+        $payload = new Payload($this->postRequest($this->getUrl().'/trade/getLeadDetails', $data));
+        $response = new GetLeadDetailsResponse($payload);
 
         return $response;
     }
