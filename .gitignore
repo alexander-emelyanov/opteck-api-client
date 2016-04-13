@@ -6,3 +6,6 @@ composer.phar
 
 # JetBrains IDE
 /.idea
+
+# Build dir for coverage analysis
+/build
