@@ -3,6 +3,9 @@
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>
+            <exclude>
+                <file>./src/Payload.php</file>
+            </exclude>
         </whitelist>
     </filter>
     <testsuites>
