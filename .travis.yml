@@ -9,5 +9,7 @@ before_script:
     - flags=""
     - composer install $flags
 script: vendor/bin/phpunit
+after_script:
+    - CODECLIMATE_REPO_TOKEN=1b869016b585bc6c34e0eb3836510afc3d2166e7d97b6e30ad8b8e59041e9496 ./vendor/bin/test-reporter
 notifications:
   slack: faunusaff:3i5oVlDHMuZXXHFkTe0glJeP
