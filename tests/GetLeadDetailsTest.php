@@ -2,8 +2,6 @@
 
 namespace Opteck\Tests;
 
-use Opteck\Exceptions\LeadNotFoundException;
-
 class GetLeadDetailsTest extends TestCase
 {
     public function testLeadDetails()
