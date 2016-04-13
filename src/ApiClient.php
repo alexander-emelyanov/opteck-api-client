@@ -126,6 +126,34 @@ class ApiClient implements LoggerAwareInterface
         return $response;
     }
 
+    /**
+     * Returns array with ISO 3166-1 codes for countries forbidden for signup.
+     *
+     * @return array
+     */
+    public function getForbiddenCountries(){
+        return [
+            'IL',
+            'US',
+            'IQ',
+            'NG',
+            'DZ',
+            'MA',
+            'SD',
+            'LY',
+            'YE',
+            'BW',
+            'TN',
+            'SY',
+            'UM',
+            'VI',
+            'IR',
+            'KP',
+            'CU',
+            'BZ',
+        ];
+    }
+
     protected function getUrl()
     {
         return $this->url;

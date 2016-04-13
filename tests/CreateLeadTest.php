@@ -7,6 +7,11 @@ use Opteck\Requests\CreateLead as CreateLeadRequest;
 
 class CreateLeadTest extends TestCase
 {
+    public function testForbiddenCountries(){
+        $countries = $this->apiClient->getForbiddenCountries();
+        $this->assertNotEmpty($countries);
+    }
+
     public function testEmailAlreadyExists()
     {
         /** @var \Opteck\Requests\CreateLead $request */
