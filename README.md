@@ -34,7 +34,8 @@ You can create lead on the Opteck platform using one request.
 ```php
 /** @var \Opteck\Requests\CreateLead $request */
 $request = new \Opteck\Requests\CreateLead([
-    'email' => 'john.smith@gmail.com',
+    'email'       => 'john.smith@gmail.com',
+    'password'    => 'qwerty',
     'firstName'   => 'John',
     'lastName'    => 'Smith',
     'language'    => 'EN',

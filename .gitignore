@@ -2,7 +2,6 @@ composer.phar
 /vendor/
 /composer.lock
 
-/test.php
 /test.*.php
 
 # JetBrains IDE

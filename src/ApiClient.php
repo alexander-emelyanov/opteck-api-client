@@ -4,6 +4,7 @@ namespace Opteck;
 
 use GuzzleHttp;
 use Opteck\Requests\CreateLead as CreateLeadRequest;
+use Opteck\Responses\Auth as AuthResponse;
 use Opteck\Responses\CreateLead as CreateLeadResponse;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
@@ -54,8 +55,8 @@ class ApiClient implements LoggerAwareInterface
     public function createLead(CreateLeadRequest $request)
     {
         $data = [
-            'email'       => $request->getEmail(),
             'affiliateID' => $this->affiliateId,
+            'email'       => $request->getEmail(),
             'firstName'   => $request->getFirstName(),
             'lastName'    => $request->getLastName(),
             'phone'       => $request->getPhone(),
@@ -72,6 +73,30 @@ class ApiClient implements LoggerAwareInterface
 
         $payload = new Payload($this->postRequest($this->getUrl().'/lead/create', $data));
         $response = new CreateLeadResponse($payload);
+
+        return $response;
+    }
+
+    /**
+     * Creates a session on the platform and returns a token used in some requests along with lead info.
+     *
+     * @param string $email
+     * @param string $password
+     *
+     * @return \Opteck\Responses\Auth
+     */
+    public function auth($email, $password)
+    {
+        $data = [
+            'affiliateID' => $this->affiliateId,
+            'email'       => $email,
+            'password'    => $password,
+        ];
+
+        $data['checksum'] = $this->getChecksum($data);
+
+        $payload = new Payload($this->postRequest($this->getUrl().'/trade/auth', $data));
+        $response = new AuthResponse($payload);
 
         return $response;
     }
