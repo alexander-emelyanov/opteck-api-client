@@ -84,6 +84,8 @@ class ApiClient implements LoggerAwareInterface
      * @param string $password
      *
      * @return \Opteck\Responses\Auth
+     *
+     * @throws \Opteck\Exceptions\LeadNotFoundException
      */
     public function auth($email, $password)
     {

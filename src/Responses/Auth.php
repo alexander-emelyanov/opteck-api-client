@@ -2,6 +2,7 @@
 
 namespace Opteck\Responses;
 
+use Opteck\Exceptions\LeadNotFoundException;
 use Opteck\Payload;
 use Opteck\Response;
 
@@ -11,15 +12,15 @@ class Auth extends Response
 
     const FIELD_EXPIRY_DATE = 'expiryDate';
 
-//    const RETURN_CODE_EMAIL_ALREADY_EXISTS = 11;
+    const RETURN_CODE_LEAD_NOT_FOUND = 6;
 
     public function __construct(Payload $payload)
     {
         $this->data = $payload;
-//        if ($this->getReturnCode() == static::RETURN_CODE_EMAIL_ALREADY_EXISTS) {
-//            throw new EmailAlreadyExistsException($this, 'Email already exists');
-//        }
-//        parent::__construct($payload);
+        if ($this->getReturnCode() == static::RETURN_CODE_LEAD_NOT_FOUND) {
+            throw new LeadNotFoundException($this, $this->getDescription());
+        }
+        parent::__construct($payload);
     }
 
     /**
