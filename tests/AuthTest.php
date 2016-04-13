@@ -18,7 +18,7 @@ class AuthTest extends TestCase
 
     public function testInvalidAuth()
     {
-        $email = md5(rand()) . '@gmail.com';
+        $email = md5(rand()).'@gmail.com';
         $password = md5(rand());
 
         try {
