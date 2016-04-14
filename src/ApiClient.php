@@ -68,6 +68,7 @@ class ApiClient implements LoggerAwareInterface
             'campaign'    => $request->getCampaign(),
             'subcampaign' => $request->getSubCampaign(),
             'comment'     => $request->getComment(),
+            'marker'      => $request->getMarker(),
         ];
 
         $data['checksum'] = $this->getChecksum($data);

@@ -94,6 +94,11 @@ class CreateLead extends Request
         return $this->comment;
     }
 
+    public function getMarker()
+    {
+        return $this->marker;
+    }
+
     /**
      * Email address. It should be valid. Mandatory.
      *
@@ -172,4 +177,11 @@ class CreateLead extends Request
      * @var string
      */
     protected $comment;
+
+    /**
+     * Short info about lead that might be crucial for lead conversion. Always visible to agents. Length: ≤140. Optional.
+     *
+     * @var string
+     */
+    protected $marker;
 }
