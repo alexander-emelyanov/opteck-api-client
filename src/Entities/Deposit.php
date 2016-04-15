@@ -9,7 +9,7 @@ class Deposit extends Entity
     /**
      * @return int
      */
-    public function getLeadID()
+    public function getLeadId()
     {
         return intval($this->leadID);
     }
