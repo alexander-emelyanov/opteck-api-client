@@ -6,6 +6,7 @@ use GuzzleHttp;
 use Opteck\Requests\CreateLead as CreateLeadRequest;
 use Opteck\Responses\Auth as AuthResponse;
 use Opteck\Responses\CreateLead as CreateLeadResponse;
+use Opteck\Responses\GetDeposits as GetDepositsResponse;
 use Opteck\Responses\GetLeadDetails as GetLeadDetailsResponse;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
@@ -128,6 +129,32 @@ class ApiClient implements LoggerAwareInterface
     }
 
     /**
+     * Returns list of deposits made in the specified date range.
+     *
+     * @param int $fromTimestamp UNIX timestamp
+     * @param int $toTimestamp UNIX timestamp
+     *
+     * @return \Opteck\Entities\Deposit[]
+     */
+    public function getDeposits($fromTimestamp, $toTimestamp = null)
+    {
+        $toTimestamp = !is_null($toTimestamp) ? $toTimestamp : time();
+
+        $data = [
+            'affiliateID' => $this->affiliateId,
+            'dateFrom'    => date('c', intval($fromTimestamp)),
+            'dateTo'      => date('c', intval($toTimestamp)),
+        ];
+
+        $data['checksum'] = $this->getChecksum($data);
+
+        $payload = new Payload($this->postRequest($this->getUrl().'/lead/getDeposits', $data));
+        $response = new GetDepositsResponse($payload);
+
+        return $response->getDeposits();
+    }
+
+    /**
      * Returns array with ISO 3166-1 codes for countries forbidden for signup.
      *
      * @return array
@@ -199,12 +226,19 @@ class ApiClient implements LoggerAwareInterface
 
     protected function postRequest($url, $data)
     {
-        return (string) $this->getHttpClient()
-            ->post($url, [
-                'form_params' => $data,
-                'headers'     => [
-                    'User-Agent'   => 'Opteck API Client',
-                ],
-            ])->getBody();
+        try {
+            $response = (string) $this->getHttpClient()
+                ->post($url, [
+                    'form_params' => $data,
+                    'headers'     => [
+                        'User-Agent'   => 'Opteck API Client',
+                    ],
+                ])->getBody();
+
+            return $response;
+        } catch (GuzzleHttp\Exception\ClientException $e) {
+            throw new \Exception($e->getResponse()->getReasonPhrase(), $e->getResponse()->getStatusCode());
+        }
+
     }
 }

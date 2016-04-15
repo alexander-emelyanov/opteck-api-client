@@ -52,7 +52,7 @@ class GetLeadDetails extends Response
     }
 
     /**
-     * Returns lead currency in ISO 4217, e.g. USD.
+     * Returns lead currency in ISO 4217, e.g. 'USD'.
      *
      * @return string
      */
