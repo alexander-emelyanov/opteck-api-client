@@ -132,7 +132,7 @@ class ApiClient implements LoggerAwareInterface
      * Returns list of deposits made in the specified date range.
      *
      * @param int $fromTimestamp UNIX timestamp
-     * @param int $toTimestamp UNIX timestamp
+     * @param int $toTimestamp   UNIX timestamp
      *
      * @return \Opteck\Entities\Deposit[]
      */
@@ -159,7 +159,8 @@ class ApiClient implements LoggerAwareInterface
      *
      * @return array
      */
-    public function getForbiddenCountries(){
+    public function getForbiddenCountries()
+    {
         return [
             'IL',
             'US',
@@ -239,6 +240,5 @@ class ApiClient implements LoggerAwareInterface
         } catch (GuzzleHttp\Exception\ClientException $e) {
             throw new \Exception($e->getResponse()->getReasonPhrase(), $e->getResponse()->getStatusCode());
         }
-
     }
 }

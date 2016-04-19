@@ -15,11 +15,12 @@ class GetDeposits extends Response
     public function getDeposits()
     {
         $deposits = [];
-        if (isset($this->data[static::FIELD_DATA][static::FIELD_DEPOSITS])){
+        if (isset($this->data[static::FIELD_DATA][static::FIELD_DEPOSITS])) {
             foreach ($this->data[static::FIELD_DATA][static::FIELD_DEPOSITS] as $depositData) {
                 $deposits[] = new Deposit($depositData);
             }
         }
+
         return $deposits;
     }
 }

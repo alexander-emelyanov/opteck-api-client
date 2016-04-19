@@ -7,7 +7,8 @@ use Opteck\Requests\CreateLead as CreateLeadRequest;
 
 class CreateLeadTest extends TestCase
 {
-    public function testForbiddenCountries(){
+    public function testForbiddenCountries()
+    {
         $countries = $this->apiClient->getForbiddenCountries();
         $this->assertNotEmpty($countries);
     }
