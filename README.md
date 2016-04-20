@@ -52,3 +52,41 @@ $response = $apiClient->createLead($request);
 echo "Lead created successfully with ID: " . $response->getLeadId() . PHP_EOL;
 ```
 
+### Get lead details
+
+You should use Lead Details for auto-login as well and for retrieving more information about lead.
+
+```php
+/** @var \Opteck\Responses\GetLeadDetails $leadDetails */
+$leadDetails = $apiClient->getLeadDetails($email);
+```
+
+### Auth
+
+```php
+/** @var \Opteck\Responses\Auth $authResponse */
+$authResponse = $apiClient->auth('john.smith@gmail.com', 'qwerty');
+
+echo "Lead authorized with token [" . $authResponse->getToken() . "] valid up to " . $authResponse->getExpiryTimestamp() . PHP_EOL;
+```
+
+### Get deposits
+
+Code bellow retrieves all deposits for last 7 days.
+
+```php
+/** @var \Opteck\Entities\Deposit[] $deposits */
+$deposits = $apiClient->getDeposits(time() - 2600 * 24 * 7, time());
+```
+
+### Get markets
+
+```php
+/** @var \Opteck\Entities\Market[] $markets */
+$markets = $apiClient->getMarkets();
+```
+
+### Get assets
+```php
+
+```

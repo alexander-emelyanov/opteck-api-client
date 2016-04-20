@@ -6,6 +6,7 @@ use GuzzleHttp;
 use Opteck\Requests\CreateLead as CreateLeadRequest;
 use Opteck\Responses\Auth as AuthResponse;
 use Opteck\Responses\CreateLead as CreateLeadResponse;
+use Opteck\Responses\GetAssets as GetAssetsResponse;
 use Opteck\Responses\GetDeposits as GetDepositsResponse;
 use Opteck\Responses\GetLeadDetails as GetLeadDetailsResponse;
 use Opteck\Responses\GetMarkets as GetMarketsResponse;
@@ -172,6 +173,29 @@ class ApiClient implements LoggerAwareInterface
         $response = new GetMarketsResponse($payload);
 
         return $response->getMarkets();
+    }
+
+    /**
+     *
+     * @param int $marketId
+     * @param int $assetId
+     *
+     * @throws \Exception
+     *
+     * @return \Opteck\Entities\Asset[]
+     */
+    public function getAssets($marketId = null, $assetId = null)
+    {
+        $data = [
+            'affiliateID' => $this->affiliateId,
+        ];
+
+        $data['checksum'] = $this->getChecksum($data);
+
+        $payload = new Payload($this->postRequest($this->getUrl().'/trade/getAssets', $data));
+        $response = new GetAssetsResponse($payload);
+
+        return $response->getAssets();
     }
 
     /**
