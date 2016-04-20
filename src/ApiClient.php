@@ -177,7 +177,6 @@ class ApiClient implements LoggerAwareInterface
     }
 
     /**
-     *
      * @param int $marketId
      * @param int $assetId
      *

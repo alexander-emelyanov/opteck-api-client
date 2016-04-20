@@ -6,7 +6,7 @@ use Opteck\Entities\Asset;
 use Opteck\Entities\Market;
 use Opteck\Responses\AssetRate;
 
-class Trading extends TestCase
+class TradingTest extends TestCase
 {
     public function testMarketsRetrieving()
     {
@@ -30,7 +30,7 @@ class Trading extends TestCase
             $this->assertGreaterThan(0, $asset->getPrecision());
             $this->assertGreaterThan(0, $asset->getMarketId(), 'Asset\'s attribute Market ID should be greater than 0.');
             $this->assertTrue(is_bool($asset->isActive()));
-            if (!$asset->isActive()){
+            if (!$asset->isActive()) {
                 $this->assertNotEmpty($asset->getNextOpenTime());
             }
         }
