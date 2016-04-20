@@ -6,7 +6,8 @@ use Opteck\Entities\Market;
 
 class GetMarketsTest extends TestCase
 {
-    public function testMarketsRetrieving(){
+    public function testMarketsRetrieving()
+    {
         $markets = $this->apiClient->getMarkets();
         $this->assertTrue(is_array($markets), 'Markets set should be an array.');
         foreach ($markets as $market) {
