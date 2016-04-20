@@ -4,13 +4,16 @@ namespace Opteck;
 
 use GuzzleHttp;
 use Opteck\Requests\CreateLead as CreateLeadRequest;
-use Opteck\Responses\AssetRate as AssetRateResponse;
+use Opteck\Requests\GetDefinitions as GetDefinitionsRequest;
+use Opteck\Responses\GetAssetRate as GetAssetRateResponse;
 use Opteck\Responses\Auth as AuthResponse;
 use Opteck\Responses\CreateLead as CreateLeadResponse;
+use Opteck\Responses\GetDefinitions as GetDefinitionsResponse;
 use Opteck\Responses\GetAssets as GetAssetsResponse;
 use Opteck\Responses\GetDeposits as GetDepositsResponse;
 use Opteck\Responses\GetLeadDetails as GetLeadDetailsResponse;
 use Opteck\Responses\GetMarkets as GetMarketsResponse;
+use Opteck\Responses\GetOptionTypes as GetOptionTypesResponse;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 
@@ -158,6 +161,33 @@ class ApiClient implements LoggerAwareInterface
     }
 
     /**
+     * Returns the list of option types.
+     *
+     * @param int $optionTypeId
+     *
+     * @throws \Exception
+     *
+     * @return \Opteck\Entities\OptionType[]
+     */
+    public function getOptionTypes($optionTypeId = null)
+    {
+        $data = [
+            'affiliateID' => $this->affiliateId,
+        ];
+
+        if ($optionTypeId > 0) {
+            $data['optionTypeID'] = $optionTypeId;
+        }
+
+        $data['checksum'] = $this->getChecksum($data);
+
+        $payload = new Payload($this->postRequest($this->getUrl().'/trade/getOptionTypes', $data));
+        $response = new GetOptionTypesResponse($payload);
+
+        return $response->getOptionTypes();
+    }
+
+    /**
      * @throws \Exception
      *
      * @return \Opteck\Entities\Market[]
@@ -190,6 +220,14 @@ class ApiClient implements LoggerAwareInterface
             'affiliateID' => $this->affiliateId,
         ];
 
+        if ($marketId > 0) {
+            $data['marketID'] = intval($marketId);
+        }
+
+        if ($assetId > 0) {
+            $data['assetID'] = intval($assetId);
+        }
+
         $data['checksum'] = $this->getChecksum($data);
 
         $payload = new Payload($this->postRequest($this->getUrl().'/trade/getAssets', $data));
@@ -198,6 +236,46 @@ class ApiClient implements LoggerAwareInterface
         return $response->getAssets();
     }
 
+    /**
+     * @param \Opteck\Requests\GetDefinitions $request
+     *
+     * @return \Opteck\Entities\Definition[]
+     *
+     * @throws \Exception
+     */
+    public function getDefinitions(GetDefinitionsRequest $request)
+    {
+        $data = [
+            'affiliateID' => $this->affiliateId,
+        ];
+
+        if ($request->getAssetId()) {
+            $data['assetID'] = $request->getAssetId();
+        }
+
+        if ($request->getIsActive() !== null) {
+            $data['isActive'] = intval($request->getIsActive());
+        }
+
+        if ($request->getOptionTypeId()) {
+            $data['assetID'] = $request->getOptionTypeId();
+        }
+
+        $data['checksum'] = $this->getChecksum($data);
+
+        $payload = new Payload($this->postRequest($this->getUrl().'/trade/getDefinitions', $data));
+        $response = new GetDefinitionsResponse($payload);
+
+        return $response->getDefinitions();
+    }
+
+    /**
+     * @param int $assetId
+     *
+     * @return \Opteck\Responses\GetAssetRate
+     *
+     * @throws \Exception
+     */
     public function getAssetRate($assetId)
     {
         $data = [
@@ -209,7 +287,7 @@ class ApiClient implements LoggerAwareInterface
 
         $payload = new Payload($this->postRequest($this->getUrl().'/trade/getRate', $data));
 
-        return new AssetRateResponse($payload);
+        return new GetAssetRateResponse($payload);
     }
 
     /**

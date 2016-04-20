@@ -4,7 +4,7 @@ namespace Opteck\Responses;
 
 use Opteck\Response;
 
-class AssetRate extends Response
+class GetAssetRate extends Response
 {
     const FIELD_RATE = 'rate';
 

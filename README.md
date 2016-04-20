@@ -79,6 +79,15 @@ Code bellow retrieves all deposits for last 7 days.
 $deposits = $apiClient->getDeposits(time() - 2600 * 24 * 7, time());
 ```
 
+## Trading
+
+### Get option types
+
+```php
+/** @var \Opteck\Entities\OptionType[] $optionTypes */
+$optionTypes = $apiClient->getOptionTypes();
+```
+
 ### Get markets
 
 ```php
@@ -87,6 +96,21 @@ $markets = $apiClient->getMarkets();
 ```
 
 ### Get assets
+
 ```php
+/** @var \Opteck\Entities\Asset[] $assets */
+$assets = $apiClient->getAssets();
+```
+
+### Get asset rate
+
+```php
+/** @var \Opteck\Responses\GetAssetRate $assetRate */
+$assetRate = $apiClient->getAssetRate(<Asset ID>);
+```
+
+### Trade
+
+```
 
 ```
