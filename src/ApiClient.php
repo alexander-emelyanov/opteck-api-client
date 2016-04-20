@@ -4,6 +4,7 @@ namespace Opteck;
 
 use GuzzleHttp;
 use Opteck\Requests\CreateLead as CreateLeadRequest;
+use Opteck\Responses\AssetRate as AssetRateResponse;
 use Opteck\Responses\Auth as AuthResponse;
 use Opteck\Responses\CreateLead as CreateLeadResponse;
 use Opteck\Responses\GetAssets as GetAssetsResponse;
@@ -196,6 +197,20 @@ class ApiClient implements LoggerAwareInterface
         $response = new GetAssetsResponse($payload);
 
         return $response->getAssets();
+    }
+
+    public function getAssetRate($assetId)
+    {
+        $data = [
+            'affiliateID' => $this->affiliateId,
+            'assetID'     => intval($assetId),
+        ];
+
+        $data['checksum'] = $this->getChecksum($data);
+
+        $payload = new Payload($this->postRequest($this->getUrl().'/trade/getRate', $data));
+
+        return new AssetRateResponse($payload);
     }
 
     /**
