@@ -2,7 +2,7 @@
 
 namespace Opteck\Tests;
 
-class DepositsTest extends TestCase
+class GetDepositsTest extends TestCase
 {
     public function testDeposits(){
         $deposits = $this->apiClient->getDeposits(0);
