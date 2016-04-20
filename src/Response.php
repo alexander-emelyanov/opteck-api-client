@@ -17,9 +17,20 @@ class Response
     public function __construct(Payload $payload)
     {
         $this->data = $payload;
+        $this->check();
         if (!$this->isSuccess()) {
             throw new Exception($this, $this->getDescription());
         }
+    }
+
+    /**
+     * Override this method for custom response checks
+     *
+     * @return bool
+     */
+    protected function check()
+    {
+        return true;
     }
 
     public function isSuccess()

@@ -5,6 +5,7 @@ namespace Opteck;
 use GuzzleHttp;
 use Opteck\Requests\CreateLead as CreateLeadRequest;
 use Opteck\Requests\GetDefinitions as GetDefinitionsRequest;
+use Opteck\Requests\Trade as TradeRequest;
 use Opteck\Responses\GetAssetRate as GetAssetRateResponse;
 use Opteck\Responses\Auth as AuthResponse;
 use Opteck\Responses\CreateLead as CreateLeadResponse;
@@ -14,6 +15,7 @@ use Opteck\Responses\GetDeposits as GetDepositsResponse;
 use Opteck\Responses\GetLeadDetails as GetLeadDetailsResponse;
 use Opteck\Responses\GetMarkets as GetMarketsResponse;
 use Opteck\Responses\GetOptionTypes as GetOptionTypesResponse;
+use Opteck\Responses\Trade as TradeResponse;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 
@@ -290,6 +292,27 @@ class ApiClient implements LoggerAwareInterface
         return new GetAssetRateResponse($payload);
     }
 
+    public function trade(TradeRequest $request)
+    {
+        $data = [
+            'affiliateID'  => $this->affiliateId,
+            'token'        => $request->getToken(),
+            'timestamp'    => $request->getTimestamp(),
+            'microtime'    => $request->getMicrotime(),
+            'definitionID' => $request->getDefinitionId(),
+            'strike'       => $request->getStrike(),
+            'amount'       => $request->getAmount(),
+            'direction'    => $request->getDirection(),
+        ];
+
+        $data['checksum'] = $this->getChecksum($data);
+
+        $payload = new Payload($this->postRequest($this->getUrl().'/trade/action', $data));
+        $response = new TradeResponse($payload);
+
+        return $response;
+    }
+
     /**
      * Returns array with ISO 3166-1 codes for countries forbidden for signup.
      *
@@ -378,3 +401,4 @@ class ApiClient implements LoggerAwareInterface
         }
     }
 }
+
