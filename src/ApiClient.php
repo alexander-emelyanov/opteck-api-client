@@ -156,13 +156,12 @@ class ApiClient implements LoggerAwareInterface
     }
 
     /**
-     *
+     * @throws \Exception
      *
      * @return \Opteck\Entities\Market[]
-     *
-     * @throws \Exception
      */
-    public function getMarkets(){
+    public function getMarkets()
+    {
         $data = [
             'affiliateID' => $this->affiliateId,
         ];

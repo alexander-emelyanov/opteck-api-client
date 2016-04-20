@@ -35,6 +35,4 @@ class Market extends Entity
      * @var string
      */
     protected $name;
-
-
 }
