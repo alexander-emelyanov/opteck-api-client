@@ -8,6 +8,7 @@ use Opteck\Responses\Auth as AuthResponse;
 use Opteck\Responses\CreateLead as CreateLeadResponse;
 use Opteck\Responses\GetDeposits as GetDepositsResponse;
 use Opteck\Responses\GetLeadDetails as GetLeadDetailsResponse;
+use Opteck\Responses\GetMarkets as GetMarketsResponse;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 
@@ -152,6 +153,26 @@ class ApiClient implements LoggerAwareInterface
         $response = new GetDepositsResponse($payload);
 
         return $response->getDeposits();
+    }
+
+    /**
+     *
+     *
+     * @return \Opteck\Entities\Market[]
+     *
+     * @throws \Exception
+     */
+    public function getMarkets(){
+        $data = [
+            'affiliateID' => $this->affiliateId,
+        ];
+
+        $data['checksum'] = $this->getChecksum($data);
+
+        $payload = new Payload($this->postRequest($this->getUrl().'/trade/getMarkets', $data));
+        $response = new GetMarketsResponse($payload);
+
+        return $response->getMarkets();
     }
 
     /**
