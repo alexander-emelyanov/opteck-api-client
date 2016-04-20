@@ -73,7 +73,7 @@ class Definition extends Entity
      */
     public function getStopTime()
     {
-        return $this->stopTime;
+        return intval($this->stopTime);
     }
 
     /**
@@ -127,7 +127,7 @@ class Definition extends Entity
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function getIsActive()
     {

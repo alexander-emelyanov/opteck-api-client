@@ -72,6 +72,19 @@ class TradingTest extends TestCase
         $this->assertNotEmpty($definitions);
         foreach ($definitions as $definition){
             $this->assertNotEmpty($definition->getId());
+            $this->assertGreaterThan(0, $definition->getAssetId());
+            $this->assertNotEmpty($definition->getAssetName());
+            $this->assertGreaterThan(0, $definition->getMarketId());
+            $this->assertGreaterThan(0, $definition->getOptionTypeId());
+            $this->assertGreaterThan(0, $definition->getDuration());
+            $this->assertGreaterThan(-1, $definition->getStopTime());
+            $this->assertGreaterThan(0, $definition->getPayout());
+            $this->assertGreaterThan(-1, $definition->getProtection());
+            $this->assertGreaterThan(-1, $definition->getSellStopTime());
+            $this->assertGreaterThan(0, $definition->getStartTime());
+            $this->assertGreaterThan(0, $definition->getEndTime());
+            $this->assertTrue(is_bool($definition->getIsActive()));
+            break;
         }
     }
 }
