@@ -41,5 +41,4 @@ class GetDefinitions extends Request
     protected $isActive;
 
     protected $optionTypeId;
-
 }

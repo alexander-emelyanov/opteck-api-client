@@ -8,11 +8,11 @@ use Opteck\Exceptions\NoAvailableOptionsException;
 use Opteck\Requests\CreateLead as CreateLeadRequest;
 use Opteck\Requests\GetDefinitions as GetDefinitionsRequest;
 use Opteck\Requests\Trade as TradeRequest;
-use Opteck\Responses\GetAssetRate as GetAssetRateResponse;
 use Opteck\Responses\Auth as AuthResponse;
 use Opteck\Responses\CreateLead as CreateLeadResponse;
-use Opteck\Responses\GetDefinitions as GetDefinitionsResponse;
+use Opteck\Responses\GetAssetRate as GetAssetRateResponse;
 use Opteck\Responses\GetAssets as GetAssetsResponse;
+use Opteck\Responses\GetDefinitions as GetDefinitionsResponse;
 use Opteck\Responses\GetDeposits as GetDepositsResponse;
 use Opteck\Responses\GetLeadDetails as GetLeadDetailsResponse;
 use Opteck\Responses\GetMarkets as GetMarketsResponse;
@@ -243,9 +243,9 @@ class ApiClient implements LoggerAwareInterface
     /**
      * @param \Opteck\Requests\GetDefinitions $request
      *
-     * @return \Opteck\Entities\Definition[]
-     *
      * @throws \Exception
+     *
+     * @return \Opteck\Entities\Definition[]
      */
     public function getDefinitions(GetDefinitionsRequest $request)
     {
@@ -276,9 +276,9 @@ class ApiClient implements LoggerAwareInterface
     /**
      * @param int $assetId
      *
-     * @return \Opteck\Responses\GetAssetRate
-     *
      * @throws \Exception
+     *
+     * @return \Opteck\Responses\GetAssetRate
      */
     public function getAssetRate($assetId)
     {
@@ -304,11 +304,10 @@ class ApiClient implements LoggerAwareInterface
      * @param int    $direction Required position's direction. -1 - put, 1 - sell.
      * @param int    $amount    Position amount, should be at least 25$ or equivalent.
      *
-     * @return \Opteck\Responses\Trade
-     *
      * @throws \Opteck\Exceptions\NoAvailableOptionsException
      * @throws \Opteck\Exceptions\NoEnoughBalanceException
      *
+     * @return \Opteck\Responses\Trade
      */
     public function openPosition($email, $password, $symbol, $direction, $amount)
     {
@@ -322,7 +321,7 @@ class ApiClient implements LoggerAwareInterface
         ]));
 
         if (empty($definitions)) {
-            throw new NoAvailableOptionsException(null, 'No available options for ' . $symbol);
+            throw new NoAvailableOptionsException(null, 'No available options for '.$symbol);
         }
 
         // We will use first definition, without any logic...
@@ -331,13 +330,13 @@ class ApiClient implements LoggerAwareInterface
         $assetRate = $this->getAssetRate($assetId);
 
         $response = $this->trade(new TradeRequest([
-            'token'     => $authResponse->getToken(),
-            'timestamp' => $assetRate->getTimestamp(),
-            'microtime' => $assetRate->getMicrotime(),
+            'token'        => $authResponse->getToken(),
+            'timestamp'    => $assetRate->getTimestamp(),
+            'microtime'    => $assetRate->getMicrotime(),
             'definitionId' => $definition->getId(),
-            'strike' => $assetRate->getRate(),
-            'amount' => $amount,
-            'direction' => $direction,
+            'strike'       => $assetRate->getRate(),
+            'amount'       => $amount,
+            'direction'    => $direction,
         ]));
 
         return $response;
@@ -455,11 +454,12 @@ class ApiClient implements LoggerAwareInterface
     /**
      * @param string $assetName Asset name, e.g.: 'EURUSD'.
      *
-     * @return int
-     *
      * @throws \Opteck\Exceptions\AssetNotFoundException
+     *
+     * @return int
      */
-    public function resolveAssetNameToId($assetName){
+    public function resolveAssetNameToId($assetName)
+    {
         $assets = $this->getAssets();
 
         foreach ($assets as $asset) {
@@ -469,7 +469,6 @@ class ApiClient implements LoggerAwareInterface
             }
         }
 
-        throw new AssetNotFoundException(null, 'Asset ' . $assetName . ' not found');
+        throw new AssetNotFoundException(null, 'Asset '.$assetName.' not found');
     }
 }
-
