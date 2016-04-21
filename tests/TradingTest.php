@@ -5,7 +5,6 @@ namespace Opteck\Tests;
 use Opteck\Entities\Asset;
 use Opteck\Entities\Market;
 use Opteck\Entities\OptionType;
-use Opteck\Exceptions\AssetNotFoundException;
 use Opteck\Payload;
 use Opteck\Requests\GetDefinitions;
 use Opteck\Responses\GetAssetRate;
@@ -13,7 +12,7 @@ use Opteck\Responses\Trade as TradeResponse;
 
 class TradingTest extends TestCase
 {
-    CONST RESPONSE_SUCCESSFUL_TRADE = '{"returnCode":1,"description":"Successful call","timestampGenerated":"2016-04-21T11:48:36+00:00","data":{"tradeActionID":46682766,"balance":225}}';
+    const RESPONSE_SUCCESSFUL_TRADE = '{"returnCode":1,"description":"Successful call","timestampGenerated":"2016-04-21T11:48:36+00:00","data":{"tradeActionID":46682766,"balance":225}}';
 
     public function testOptionTypesRetrieving()
     {
@@ -74,7 +73,7 @@ class TradingTest extends TestCase
         $definitions = $this->apiClient->getDefinitions($request);
         $this->assertTrue(is_array($definitions));
         $this->assertNotEmpty($definitions);
-        foreach ($definitions as $definition){
+        foreach ($definitions as $definition) {
             $this->assertNotEmpty($definition->getId());
             $this->assertGreaterThan(0, $definition->getAssetId());
             $this->assertNotEmpty($definition->getAssetName());
@@ -115,7 +114,8 @@ class TradingTest extends TestCase
     /**
      * @expectedException \Opteck\Exceptions\NoEnoughBalanceException
      */
-    public function testOpenPositionMethod(){
+    public function testOpenPositionMethod()
+    {
         $this->apiClient->openPosition('test.auth@gmail.com', 'qwerty', 'EURUSD', 1, 25);
     }
 }

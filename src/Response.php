@@ -24,7 +24,7 @@ class Response
     }
 
     /**
-     * Override this method for custom response checks
+     * Override this method for custom response checks.
      *
      * @return bool
      */

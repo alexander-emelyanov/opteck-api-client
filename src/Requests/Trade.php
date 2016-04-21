@@ -43,7 +43,7 @@ class Trade extends Request
     }
 
     /**
-     * Definition ID. You should get it from Get Definitions method
+     * Definition ID. You should get it from Get Definitions method.
      *
      * @see \Opteck\ApiClient::getDefinitions()
      *
@@ -77,7 +77,7 @@ class Trade extends Request
     }
 
     /**
-     * Returns direction of the trade. 1 - Up, -1 - Down
+     * Returns direction of the trade. 1 - Up, -1 - Down.
      *
      * @return int
      */
@@ -103,5 +103,4 @@ class Trade extends Request
     protected $amount;
 
     protected $direction;
-
 }
