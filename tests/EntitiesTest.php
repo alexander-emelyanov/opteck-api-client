@@ -2,7 +2,6 @@
 
 namespace Opteck\Tests;
 
-use Opteck\Entities\Deposit;
 use Opteck\Payload;
 use Opteck\Responses\GetDeposits;
 
