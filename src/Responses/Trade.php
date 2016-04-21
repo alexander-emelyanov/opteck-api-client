@@ -2,12 +2,15 @@
 
 namespace Opteck\Responses;
 
+use Opteck\Exceptions\NoEnoughBalanceException;
 use Opteck\Exceptions\TooSmallAmountException;
 use Opteck\Response;
 
 class Trade extends Response
 {
     const RETURN_CODE_TOO_SMALL_AMOUNT = 105;
+
+    const RETURN_CODE_NO_ENOUGH_BALANCE = 109;
 
     const FIELD_TRADE_ACTION_ID = 'tradeActionID';
 
@@ -17,6 +20,9 @@ class Trade extends Response
     {
         if ($this->getReturnCode() == static::RETURN_CODE_TOO_SMALL_AMOUNT) {
             throw new TooSmallAmountException($this, 'Too small amount');
+        }
+        if ($this->getReturnCode() == static::RETURN_CODE_NO_ENOUGH_BALANCE) {
+            throw new NoEnoughBalanceException($this, 'No enough balance');
         }
     }
 

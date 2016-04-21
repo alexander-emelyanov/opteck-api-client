@@ -3,6 +3,8 @@
 namespace Opteck;
 
 use GuzzleHttp;
+use Opteck\Exceptions\AssetNotFoundException;
+use Opteck\Exceptions\NoAvailableOptionsException;
 use Opteck\Requests\CreateLead as CreateLeadRequest;
 use Opteck\Requests\GetDefinitions as GetDefinitionsRequest;
 use Opteck\Requests\Trade as TradeRequest;
@@ -292,6 +294,55 @@ class ApiClient implements LoggerAwareInterface
         return new GetAssetRateResponse($payload);
     }
 
+    /**
+     * Special wrapper for complex Opteck logic required for each trade.
+     * You can use this method instead of procedure with Assets, Asset rate, Definitions, and authorization.
+     *
+     * @param string $email     User email
+     * @param string $password  User password
+     * @param string $symbol    Symbol name, e.g.: 'EURUSD'.
+     * @param int    $direction Required position's direction. -1 - put, 1 - sell.
+     * @param int    $amount    Position amount, should be at least 25$ or equivalent.
+     *
+     * @return \Opteck\Responses\Trade
+     *
+     * @throws \Opteck\Exceptions\NoAvailableOptionsException
+     * @throws \Opteck\Exceptions\NoEnoughBalanceException
+     *
+     */
+    public function openPosition($email, $password, $symbol, $direction, $amount)
+    {
+        $authResponse = $this->auth($email, $password);
+
+        $assetId = $this->resolveAssetNameToId($symbol);
+
+        $definitions = $this->getDefinitions(new GetDefinitionsRequest([
+            'isActive' => 1,
+            'assetId'  => $assetId,
+        ]));
+
+        if (empty($definitions)) {
+            throw new NoAvailableOptionsException(null, 'No available options for ' . $symbol);
+        }
+
+        // We will use first definition, without any logic...
+        $definition = $definitions[0];
+
+        $assetRate = $this->getAssetRate($assetId);
+
+        $response = $this->trade(new TradeRequest([
+            'token'     => $authResponse->getToken(),
+            'timestamp' => $assetRate->getTimestamp(),
+            'microtime' => $assetRate->getMicrotime(),
+            'definitionId' => $definition->getId(),
+            'strike' => $assetRate->getRate(),
+            'amount' => $amount,
+            'direction' => $direction,
+        ]));
+
+        return $response;
+    }
+
     public function trade(TradeRequest $request)
     {
         $data = [
@@ -399,6 +450,26 @@ class ApiClient implements LoggerAwareInterface
         } catch (GuzzleHttp\Exception\ClientException $e) {
             throw new \Exception($e->getResponse()->getReasonPhrase(), $e->getResponse()->getStatusCode());
         }
+    }
+
+    /**
+     * @param string $assetName Asset name, e.g.: 'EURUSD'.
+     *
+     * @return int
+     *
+     * @throws \Opteck\Exceptions\AssetNotFoundException
+     */
+    public function resolveAssetNameToId($assetName){
+        $assets = $this->getAssets();
+
+        foreach ($assets as $asset) {
+            $clearAssetName = str_replace('/', '', $asset->getName());
+            if (strcasecmp($clearAssetName, $assetName) === 0) {
+                return $asset->getId();
+            }
+        }
+
+        throw new AssetNotFoundException(null, 'Asset ' . $assetName . ' not found');
     }
 }
 

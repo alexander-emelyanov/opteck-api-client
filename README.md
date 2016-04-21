@@ -111,6 +111,8 @@ $assetRate = $apiClient->getAssetRate(<Asset ID>);
 
 ### Trade
 
-```
+This package provide special wrapper for Opteck logic. You can use it for easy trading.
 
+```php
+$apiClient->openPosition('<Email>', '<Password>', '<Symbol>', <Direction>, <Amount>);
 ```
