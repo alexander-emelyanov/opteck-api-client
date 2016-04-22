@@ -7,7 +7,6 @@ use Opteck\Response;
 
 class GetTradeActions extends Response
 {
-
     /**
      * @return \Opteck\Entities\TradeAction[]
      */

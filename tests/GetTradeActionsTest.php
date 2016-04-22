@@ -11,7 +11,7 @@ class GetTradeActionsTest extends TestCase
     public function testSuccessResponse()
     {
         // Successful trade actions retrieving
-        $json = <<<JSON
+        $json = <<<'JSON'
     {"returnCode":1,"description":"Successful call","timestampGenerated":"2016-04-22T10:46:55+00:00","data":[{"id":"1","optionTypeID":"4","assetID":"17","assetName":"EURUSD","definitionID":"7","createdDate":"2016-04-21T11:48:34+00:00","expirationDate":"2016-04-21T11:49:34+00:00","currency":"USD","status":3,"direction":"1","amount":"25.00","amountLead":"25.00","profit":"41.00","profitLead":"41.00","strike":1.13212,"strikeEnd":1.13321}]}
 JSON;
         $response = new GetTradeActions(new Payload($json));
@@ -44,5 +44,4 @@ JSON;
         $tradeActions = $this->apiClient->getTradeActions('test.auth@gmail.com');
         $this->assertEmpty($tradeActions);
     }
-
 }
