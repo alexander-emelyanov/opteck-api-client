@@ -3,6 +3,7 @@
 namespace Opteck\Tests;
 
 use Opteck\Payload;
+use Opteck\Response;
 use Opteck\Responses\GetDeposits;
 
 class EntitiesTest extends TestCase
@@ -26,5 +27,15 @@ JSON;
             $this->assertTrue($deposit->getIsFirstTimeDeposit());
             $this->assertTrue($deposit->getIsValid());
         }
+    }
+
+    /**
+     * @expectedException \Opteck\Exception
+     */
+    public function testUnknownApiResponse(){
+        $json = <<<'JSON'
+{"returnCode":666,"description":"New unknown API error","timestampGenerated":"2016-04-22T16:11:29+03:00"}
+JSON;
+        new Response(new Payload($json));
     }
 }
