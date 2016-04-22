@@ -120,5 +120,6 @@ $apiClient->openPosition('<Email>', '<Password>', '<Symbol>', <Direction>, <Amou
 ### Trade actions report
 
 ```php
+/** \Opteck\Entities\TradeAction[] $tradeActions */
 $tradeActions = $apiClient->getTradeActions('<Email>');
 ```

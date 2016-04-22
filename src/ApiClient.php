@@ -364,6 +364,17 @@ class ApiClient implements LoggerAwareInterface
         return $response;
     }
 
+    /**
+     * Returns user's trades (opened and closed).
+     *
+     * @param string $email
+     * @param int    $timeFrom
+     * @param int    $timeTo
+     *
+     * @return Entities\TradeAction[]
+     *
+     * @throws \Exception
+     */
     public function getTradeActions($email, $timeFrom = null, $timeTo = null)
     {
         if (is_null($timeFrom)) {
