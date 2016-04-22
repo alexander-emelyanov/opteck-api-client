@@ -9,6 +9,6 @@ class ExceptionsTest extends TestCase
     public function testException()
     {
         $exception = new Exception(null);
-        $this->assertEquals(null, $exception->getMessage());
+        $this->assertEquals(null, $exception->getResponse());
     }
 }

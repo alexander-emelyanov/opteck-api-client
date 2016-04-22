@@ -371,9 +371,9 @@ class ApiClient implements LoggerAwareInterface
      * @param int    $timeFrom
      * @param int    $timeTo
      *
-     * @return Entities\TradeAction[]
-     *
      * @throws \Exception
+     *
+     * @return \Opteck\Entities\TradeAction[]
      */
     public function getTradeActions($email, $timeFrom = null, $timeTo = null)
     {
