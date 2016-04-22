@@ -118,4 +118,15 @@ class TradingTest extends TestCase
     {
         $this->apiClient->openPosition('test.auth@gmail.com', 'qwerty', 'EURUSD', 1, 25);
     }
+
+    /**
+     * @expectedException \Opteck\Exceptions\TooSmallAmountException
+     */
+    public function testTooSmallAmountException()
+    {
+        $json = <<<'JSON'
+ {"returnCode":105,"description":"Too small amount","timestampGenerated":"2016-04-22T14:50:34+00:00"}
+JSON;
+        new TradeResponse(new Payload($json));
+    }
 }
