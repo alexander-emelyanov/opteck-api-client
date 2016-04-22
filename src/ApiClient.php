@@ -364,7 +364,6 @@ class ApiClient implements LoggerAwareInterface
         return $response;
     }
 
-
     public function getTradeActions($email, $timeFrom = null, $timeTo = null)
     {
         if (is_null($timeFrom)) {

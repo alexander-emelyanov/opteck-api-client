@@ -230,8 +230,7 @@ class TradeAction extends Entity
         if (isset($statusesDict[$status])) {
             return $statusesDict[$status];
         }
+
         return 'Unknown';
     }
-
-
 }
