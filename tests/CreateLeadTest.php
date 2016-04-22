@@ -5,8 +5,8 @@ namespace Opteck\Tests;
 use Opteck\Exception;
 use Opteck\Exceptions\EmailAlreadyExistsException;
 use Opteck\Payload;
-use Opteck\Responses\CreateLead as CreateLeadResponse;
 use Opteck\Requests\CreateLead as CreateLeadRequest;
+use Opteck\Responses\CreateLead as CreateLeadResponse;
 
 class CreateLeadTest extends TestCase
 {
@@ -39,7 +39,6 @@ JSON;
             $this->assertFalse($response->isSuccess());
             $this->assertNotEmpty($response->getInvalidFields());
         }
-
     }
 
     public function testEmailAlreadyExists()
