@@ -17,6 +17,7 @@ use Opteck\Responses\GetDeposits as GetDepositsResponse;
 use Opteck\Responses\GetLeadDetails as GetLeadDetailsResponse;
 use Opteck\Responses\GetMarkets as GetMarketsResponse;
 use Opteck\Responses\GetOptionTypes as GetOptionTypesResponse;
+use Opteck\Responses\GetTradeActions as GetTradeActionsResponse;
 use Opteck\Responses\Trade as TradeResponse;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
@@ -363,6 +364,32 @@ class ApiClient implements LoggerAwareInterface
         return $response;
     }
 
+
+    public function getTradeActions($email, $timeFrom = null, $timeTo = null)
+    {
+        if (is_null($timeFrom)) {
+            $timeFrom = strtotime('-1 week');
+        }
+
+        if (is_null($timeTo)) {
+            $timeTo = time();
+        }
+
+        $data = [
+            'affiliateID' => $this->affiliateId,
+            'email'       => $email,
+            'dateFrom'    => date('c', $timeFrom),
+            'dateTo'      => date('c', $timeTo),
+        ];
+
+        $data['checksum'] = $this->getChecksum($data);
+
+        $payload = new Payload($this->postRequest($this->getUrl().'/trade/instances', $data));
+        $response = new GetTradeActionsResponse($payload);
+
+        return $response->getTradeActions();
+    }
+
     /**
      * Returns array with ISO 3166-1 codes for countries forbidden for signup.
      *
@@ -469,6 +496,6 @@ class ApiClient implements LoggerAwareInterface
             }
         }
 
-        throw new AssetNotFoundException(null, 'Asset '.$assetName.' not found');
+        throw new AssetNotFoundException(null, 'Asset ['.$assetName.'] not found');
     }
 }

@@ -116,3 +116,9 @@ This package provide special wrapper for Opteck logic. You can use it for easy t
 ```php
 $apiClient->openPosition('<Email>', '<Password>', '<Symbol>', <Direction>, <Amount>);
 ```
+
+### Trade actions report
+
+```php
+$tradeActions = $apiClient->getTradeActions('<Email>');
+```
